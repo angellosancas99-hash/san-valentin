@@ -7,7 +7,7 @@
 
 <style>
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   background: linear-gradient(#ffe6ee, #fff);
   text-align: center;
   padding: 20px;
@@ -16,6 +16,7 @@ body {
 
 h1 {
   font-size: 2em;
+  margin-bottom: 10px;
 }
 
 button {
@@ -41,13 +42,13 @@ button:hover {
   display: block;
 }
 
-/* Carrusel */
+/* CARRUSEL SIEMPRE VISIBLE */
 .carousel {
   position: relative;
   width: 100%;
   max-width: 300px;
   height: 250px;
-  margin: 20px auto;
+  margin: 15px auto;
   overflow: hidden;
   border-radius: 20px;
   background: #ffeef2;
@@ -68,7 +69,7 @@ button:hover {
   opacity: 1;
 }
 
-/* Final */
+/* FINAL */
 .final-text {
   font-size: 2.5em;
   color: #ff2e63;
@@ -88,6 +89,15 @@ button:hover {
 
 <h1>💖 Para Malena 💖</h1>
 
+<!-- CARRUSEL (SIEMPRE VISIBLE) -->
+<div class="carousel">
+  <img src="foto1.jpg" class="active">
+  <img src="foto2.jpg">
+  <img src="foto3.jpg">
+  <img src="foto4.jpg">
+  <img src="foto5.jpg">
+</div>
+
 <!-- PREGUNTA 1 -->
 <div id="p1" class="section active">
   <p>🌹 ¿Quieres ser mi San Valentín?</p>
@@ -102,47 +112,28 @@ button:hover {
   <button onclick="answer2()">Yo sé que ya aceptaste 🙄</button>
 </div>
 
-<!-- CARRUSEL -->
-<div id="p3" class="section">
-  <p>💞 Nosotros 💞</p>
-  <div class="carousel">
-    <img src="foto1.jpg" class="active">
-    <img src="foto2.jpg">
-    <img src="foto3.jpg">
-    <img src="foto4.jpg">
-    <img src="foto5.jpg">
-  </div>
-  <button onclick="final()">Continuar 💘</button>
-</div>
-
 <!-- FINAL -->
-<div id="p4" class="section">
+<div id="p3" class="section">
   <img src="meme.jpg" class="meme">
   <div class="final-text">TE AMO MI PRINCESA HERMOSA 💖</div>
   <p>Felices 2 meses, Malena ✨<br>Con amor, Angello 🥹</p>
 </div>
 
-<!-- MUSICA YOUTUBE -->
-<iframe
-  id="music"
-  width="0"
-  height="0"
-  src="https://www.youtube.com/embed/WHcFA1qeF9k?enablejsapi=1&start=36"
-  frameborder="0"
-  allow="autoplay">
-</iframe>
+<!-- AUDIO -->
+<audio id="music" src="musica.mp3"></audio>
 
 <script>
-let current = 0;
-const sections = ["p1", "p2", "p3", "p4"];
-
+/* SECCIONES */
 function show(id) {
-  sections.forEach(s => document.getElementById(s).classList.remove("active"));
+  document.getElementById("p1").classList.remove("active");
+  document.getElementById("p2").classList.remove("active");
+  document.getElementById("p3").classList.remove("active");
   document.getElementById(id).classList.add("active");
 }
 
+/* RESPUESTAS */
 function answer1() {
-  playMusic();
+  startMusic();
   show("p2");
 }
 
@@ -150,18 +141,17 @@ function answer2() {
   show("p3");
 }
 
-function final() {
-  show("p4");
+/* MÚSICA DESDE 0:36 */
+function startMusic() {
+  const music = document.getElementById("music");
+  music.currentTime = 36;
+  music.play();
 }
 
-/* Música */
-function playMusic() {
-  const iframe = document.getElementById("music");
-  iframe.src += "&autoplay=1";
-}
-
-/* Carrusel automático */
+/* CARRUSEL AUTOMÁTICO */
+let current = 0;
 const images = document.querySelectorAll(".carousel img");
+
 setInterval(() => {
   images[current].classList.remove("active");
   current = (current + 1) % images.length;
